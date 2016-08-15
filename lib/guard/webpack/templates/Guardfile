@@ -1,1 +1,4 @@
-guard :webpack
+guard :webpack, binary: './node_modules/.bin/webpack-dev-server', config: './config/webpack/development.config.js', flags: '--hot' do
+  watch %r{config/webpack/(.*)}
+  watch 'package.json'
+end

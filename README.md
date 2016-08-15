@@ -1,5 +1,3 @@
-# Guard::Webpack [![Gem Version](https://badge.fury.io/rb/guard-webpack.png)](http://badge.fury.io/rb/guard-webpack)
-
 Guard::Webpack spins up a [Webpack](http://webpack.github.io) watcher in a background thread.
 
 ## Installation
@@ -31,7 +29,9 @@ At present, Guard::Webpack assumes you already have Webpack configured via a `we
 You can, however, add additional options to your Guardfile, as seen below:
 
 ```ruby
-guard :webpack, colors: false, config: './config/webpack/development.config.js'
+guard :webpack, binary: './node_modules/.bin/webpack-dev-server', config: './config/webpack/development.config.js', flags: '--hot' do
+  watch %r{config/webpack/(.*)}
+end
 ```
 
 ## Options
@@ -39,10 +39,9 @@ guard :webpack, colors: false, config: './config/webpack/development.config.js'
 ### List of available options
 
 ```ruby
-d: false              # development mode turns on debug mode, source maps, and path info, default: false
-colors: true             # use colors in displaying webpack output, default: true
-progress: true           # display a progress bar for long compiles, default: true
-config: 'path_to_config' # define an alternate config file
+flags: '--list --of --flags' # define a list of custom flags
+binary: 'path_to_binary' # define a path to custom binary file
+config: 'path_to_config' # define an config file
 ```
 
 ## Notes on Guard 1.x
@@ -51,7 +50,7 @@ Guard::Webpack strives to support older versions of Guard (including the `Guard:
 
 ## Contributing
 
-1. Fork it ( https://github.com/gisikw/guard-webpack/fork )
+1. Fork it ( https://github.com/Unodor/guard-webpack/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

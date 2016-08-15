@@ -3,11 +3,7 @@ module Guard
     require 'guard/webpack/version'
     require 'guard/webpack/runner'
 
-    DEFAULT_OPTIONS = {
-      d:        false,
-      progress: true,
-      colors:   true
-    }
+    DEFAULT_OPTIONS = {}
 
     attr_accessor :runner
 

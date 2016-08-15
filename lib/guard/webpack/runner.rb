@@ -23,6 +23,10 @@ class Guard::Webpack::Runner
 
   private
 
+  def custom_webpack
+    @options[:binary] if @options[:binary]
+  end
+
   def local_webpack
     bin = File.join(Dir.pwd,'node_modules/webpack/bin/webpack.js')
     File.exists?(bin) && bin
@@ -38,21 +42,19 @@ class Guard::Webpack::Runner
   end
 
   def webpack_bin
-    local_webpack || global_webpack || no_webpack
+    custom_webpack || local_webpack || global_webpack || no_webpack
   end
 
   def option_flags
     output = ""
-    output += " -d"         if @options[:d]
-    output += " --colors"   if @options[:colors]
-    output += " --progress" if @options[:progress]
+    output += " #{@options[:flags]}" if @options[:flags]
     output += " --config #{@options[:config]}" if @options[:config]
     output
   end
 
   def run_webpack
     begin
-      pid = fork{ exec("#{webpack_bin} --watch #{option_flags}") }
+      pid = fork{ exec("#{webpack_bin} #{option_flags}") }
       Process.wait(pid)
     rescue
       # TODO: Be more discerning.
