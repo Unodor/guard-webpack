@@ -5,7 +5,11 @@ class Guard::Webpack::Runner
     @options = options
   end
 
-  def restart; stop; start; end
+  def restart
+    stop
+    sleep(1)
+    start
+  end
 
   def start
     unless_running do
